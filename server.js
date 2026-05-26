@@ -7,8 +7,6 @@ const dotenv = require("dotenv");
 const { createClient }
   = require("@supabase/supabase-js");
 
-const path = require("path");
-
 dotenv.config();
 
 const app = express();
