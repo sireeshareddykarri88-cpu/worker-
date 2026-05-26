@@ -9,9 +9,21 @@ dotenv.config();
 const app = express();
 
 app.use(cors());
+
 app.use(express.json());
 
 app.use(express.static(__dirname));
+
+if (
+  !process.env.SUPABASE_URL ||
+  !process.env.SUPABASE_SERVICE_KEY
+) {
+
+  console.log("ENV FILE ERROR");
+
+  process.exit(1);
+
+}
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -43,10 +55,12 @@ app.post("/register", async (req, res) => {
       ]);
 
     if (error) {
+
       return res.status(400).json({
         success: false,
         message: error.message
       });
+
     }
 
     res.json({
@@ -69,5 +83,7 @@ app.post("/register", async (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
+
   console.log(`Server running on port ${PORT}`);
+
 });
